@@ -195,6 +195,9 @@ body::before{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;opa
 .rsvp-confirm .knot path{stroke:var(--champagne);stroke-width:1.5;fill:none;stroke-dasharray:1;stroke-dashoffset:1;animation:drawKnot 1.4s var(--ease) forwards}
 @keyframes drawKnot{to{stroke-dashoffset:0}}
 .rsvp-confirm h3{font-family:var(--serif);font-weight:300;font-size:2rem;color:var(--champagne)}
+.form-status{min-height:1.4em;margin-top:.9rem;text-align:center;font-size:.86rem;color:var(--champagne)}
+.form-status.error{color:#ffcfbf}
+.btn-gold[disabled]{opacity:.62;cursor:not-allowed;transform:none}
 .wa-fallback{margin-top:1.2rem;font-size:.86rem;color:var(--on-dark-soft)}
 .wa-fallback a{color:var(--champagne);border-bottom:1px solid var(--gold)}
 

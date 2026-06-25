@@ -91,9 +91,36 @@ eleshiba-suraj-wedding/
 Open `script.js` and edit the `CONFIG` object at the top — names, dates, story,
 family, events, gallery, WhatsApp number. No other file needs changing.
 
-**To save RSVP & guestbook responses:** create a Google Apps Script web app that
-appends to a Google Sheet, then paste its URL into `CONFIG.rsvp.endpoint` and
-`CONFIG.guestbook.endpoint`. Until then, both confirm on-screen only.
+## RSVP Storage
+
+RSVP submissions are saved through the Vercel Serverless Function at
+`/api/rsvp`. The browser posts to that same-origin endpoint; the endpoint
+validates the payload and forwards it to a private Google Apps Script web app
+that appends rows to Google Sheets.
+
+Required Vercel environment variables:
+
+```bash
+GOOGLE_APPS_SCRIPT_URL=https://script.google.com/macros/s/.../exec
+RSVP_SHARED_SECRET=choose-a-long-random-secret
+```
+
+Google Sheets setup:
+
+1. Create a Google Sheet.
+2. Open **Extensions → Apps Script**.
+3. Paste `google-apps-script/rsvp-to-sheets.gs`.
+4. In Apps Script, open **Project Settings → Script properties** and add the
+   same `RSVP_SHARED_SECRET` value used in Vercel.
+5. Deploy as **Web app**.
+6. Set **Execute as:** Me.
+7. Set **Who has access:** Anyone.
+8. Copy the `/exec` URL into Vercel as `GOOGLE_APPS_SCRIPT_URL`.
+
+Responses appear in the `RSVP Responses` tab of that Google Sheet.
+
+If the backend is not configured or Google Sheets rejects the write, the RSVP
+form stays open and shows an error instead of displaying a fake success message.
 
 **To add background music:** paste a licensed / royalty-free track URL into
 `CONFIG.music.url`.

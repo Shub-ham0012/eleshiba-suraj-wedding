@@ -85,8 +85,8 @@ const CONFIG = {
 
   gallery: Array.from({length:14},(_,i)=>`assets/gallery-${i+1}.jpg`),
 
-  // RSVP / Guestbook: paste a Google Apps Script web-app URL into `endpoint` to go live.
-  rsvp: { endpoint:"", whatsapp:"+919592884646" },
+  // RSVP is saved through /api/rsvp, which forwards to Google Sheets server-side.
+  rsvp: { endpoint:"/api/rsvp", whatsapp:"+919592884646" },
   guestbook: { endpoint:"", seed:[
     { name:"The Sharma Family", message:"From classroom glances to forever vows. We couldn't be happier for you both." },
     { name:"Priya & Rohan", message:"Two of the kindest people we know, finally finding each other. A lifetime of laughter awaits." },
@@ -109,6 +109,11 @@ function setViewportUnit(){
 setViewportUnit();
 addEventListener('resize',setViewportUnit,{passive:true});
 addEventListener('orientationchange',setViewportUnit,{passive:true});
+
+function makeSubmissionId(){
+  if(window.crypto&&crypto.randomUUID)return crypto.randomUUID();
+  return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}
 
 function placeholder(label){
   const svg=`<svg xmlns='http://www.w3.org/2000/svg' width='600' height='750'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%232B1D22'/><stop offset='1' stop-color='%231A1014'/></linearGradient></defs><rect width='100%' height='100%' fill='url(%23g)'/><text x='50%' y='50%' fill='%23C9A24B' font-family='Georgia' font-size='30' font-style='italic' text-anchor='middle'>${label||'Heirloom'}</text></svg>`;
@@ -283,19 +288,51 @@ $('#dockMusic').addEventListener('click',toggleMusic);
 $('#soundInvite').addEventListener('click',toggleMusic);
 
 let attending=null;
+let rsvpSubmitting=false;
 $$('.attend button').forEach(b=>b.addEventListener('click',()=>{
   attending=b.dataset.v;$$('.attend button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
   $$('.attend button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
 }));
+function setRsvpStatus(message,type=''){
+  const el=$('#rsvpStatus');
+  el.textContent=message;
+  el.className='form-status';
+  if(type)el.classList.add(type);
+}
 $('#rsvpSend').addEventListener('click',async()=>{
-  if($('#rsvpHoney').value)return;
+  if(rsvpSubmitting||$('#rsvpHoney').value)return;
   const name=$('#rsvpName').value.trim();
-  if(!name){$('#rsvpName').focus();flash($('#rsvpName'),'Tell us your name');return;}
-  const payload={type:'rsvp',name,attending:attending||'yes',party:$('#rsvpCount').value,note:$('#rsvpNote').value.trim(),ts:new Date().toISOString()};
-  if(CONFIG.rsvp.endpoint){try{await fetch(CONFIG.rsvp.endpoint,{method:'POST',body:JSON.stringify(payload)});}catch(e){}}
-  $('#rsvpForm').style.display='none';
-  $('#rsvpConfirm').classList.add('show');
-  $('#rsvpThanks').textContent=(attending==='no')?"We'll miss you — thank you for letting us know.":`We can't wait to celebrate with you, ${name.split(' ')[0]}.`;
+  const note=$('#rsvpNote').value.trim();
+  if(!name){$('#rsvpName').focus();flash($('#rsvpName'),'Tell us your name');setRsvpStatus('Please enter your name.','error');return;}
+  if(name.length>80){$('#rsvpName').focus();setRsvpStatus('Please keep your name under 80 characters.','error');return;}
+  if(note.length>500){$('#rsvpNote').focus();setRsvpStatus('Please keep your note under 500 characters.','error');return;}
+  const payload={
+    type:'rsvp',
+    name,
+    attending:attending||'yes',
+    party:$('#rsvpCount').value,
+    note,
+    submissionId:makeSubmissionId(),
+    ts:new Date().toISOString()
+  };
+  const send=$('#rsvpSend');
+  rsvpSubmitting=true;
+  send.disabled=true;
+  send.textContent='Saving...';
+  setRsvpStatus('Saving your RSVP...');
+  try{
+    const res=await fetch(CONFIG.rsvp.endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    const data=await res.json().catch(()=>({}));
+    if(!res.ok||!data.ok)throw new Error(data.error||'Unable to save RSVP right now.');
+    $('#rsvpForm').style.display='none';
+    $('#rsvpConfirm').classList.add('show');
+    $('#rsvpThanks').textContent=(attending==='no')?"We'll miss you — thank you for letting us know.":`We can't wait to celebrate with you, ${name.split(' ')[0]}.`;
+  }catch(e){
+    setRsvpStatus(`${e.message||'Unable to save RSVP right now.'} Please try again or use WhatsApp.`, 'error');
+    send.disabled=false;
+    send.textContent='Save my seat';
+    rsvpSubmitting=false;
+  }
 });
 
 const ROT=[-2,-1,0,1,2];
