@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Eleshiba &amp; Suraj — A Wedding</title>
+<meta name="description" content="From classroom glances to wedding vows. Join Eleshiba & Suraj as they celebrate the beginning of forever — 24–25 November 2026, Amritsar." />
+<meta name="theme-color" content="#1A1014" />
+
+<meta property="og:title" content="Eleshiba &amp; Suraj — A Wedding" />
+<meta property="og:description" content="Two lives, one beautiful beginning. 24–25 November 2026 · Amritsar" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="assets/og.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="icon" href="assets/monogram.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet" />
+<link rel="preload" as="image" href="assets/hero.jpg" fetchpriority="high" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div id="loader" aria-hidden="true"><div class="mono" id="loaderMono"></div></div>
+
+<header id="hero">
+  <div class="hero-bg"><img id="heroImg" alt="Eleshiba and Suraj" fetchpriority="high" decoding="async" /></div>
+  <div class="sound-invite" id="soundInvite"><span class="ic">♪</span> Tap for sound</div>
+  <div class="hero-inner">
+    <p class="pre">A love story, years in the making</p>
+    <h1 class="names" id="heroNames"></h1>
+    <div class="thread" id="heroThread"></div>
+    <p class="tagline" id="heroTag"></p>
+    <p class="meta" id="heroMeta"></p>
+  </div>
+  <div class="scrollcue">Scroll<span class="line"></span></div>
+</header>
+
+<section id="invitation" class="section bg-ivory">
+  <div class="wrap">
+    <p class="eyebrow reveal">You are invited</p>
+    <p class="line reveal">Together with their families, <b>Eleshiba &amp; Suraj</b> invite you to celebrate the beginning of forever.</p>
+    <div class="flourish reveal" id="inviteFlourish"></div>
+  </div>
+</section>
+
+<section id="countdown" class="section bg-espresso">
+  <div class="wrap">
+    <p class="eyebrow reveal">The day approaches</p>
+    <div class="count-grid reveal" id="countGrid"></div>
+    <p class="until reveal" id="countUntil"></p>
+  </div>
+</section>
+
+<section id="story" class="section bg-ink">
+  <div class="wrap">
+    <div class="center" style="margin-bottom:3.5rem">
+      <p class="eyebrow reveal">Our story</p>
+      <h2 class="s-title reveal">How we got here</h2>
+    </div>
+    <div id="storyList"></div>
+  </div>
+</section>
+
+<section id="couple" class="section bg-blush">
+  <div class="wrap">
+    <div class="center" style="margin-bottom:3rem">
+      <p class="eyebrow reveal">The two of us</p>
+      <h2 class="s-title reveal">Meet the couple</h2>
+    </div>
+    <div class="couple-grid reveal">
+      <div class="couple-photo" id="couplePhoto"></div>
+      <div class="couple-bios" id="coupleBios"></div>
+    </div>
+  </div>
+</section>
+
+<section id="family" class="section bg-ink">
+  <div class="wrap">
+    <div class="fam-head">
+      <p class="eyebrow reveal">With the blessings of</p>
+      <h2 class="s-title reveal">Two families, one story</h2>
+    </div>
+    <div class="fam">
+      <div class="fam-side reveal"><h4 id="famBrideName"></h4><div class="fam-list" id="famBride"></div></div>
+      <div class="fam-thread reveal"><div class="thread" id="famThread"></div></div>
+      <div class="fam-side reveal"><h4 id="famGroomName"></h4><div class="fam-list" id="famGroom"></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="timeline" class="section bg-espresso">
+  <div class="wrap">
+    <div class="center" style="margin-bottom:1rem">
+      <p class="eyebrow reveal">The celebration</p>
+      <h2 class="s-title reveal">Days to remember</h2>
+    </div>
+    <div class="tl">
+      <div class="tl-spine"><div class="thread" id="tlThread"></div></div>
+      <div id="tlList"></div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery" class="section bg-ink">
+  <div class="wrap">
+    <div class="center" style="margin-bottom:1rem">
+      <p class="eyebrow reveal">Moments</p>
+      <h2 class="s-title reveal">A film of stills</h2>
+    </div>
+    <div class="gal-grid reveal" id="galGrid"></div>
+  </div>
+</section>
+<div id="lightbox"><button class="close" aria-label="Close">✕</button><img alt="" /></div>
+
+<section id="venue" class="section bg-ivory">
+  <div class="wrap venue-grid">
+    <div class="venue-map reveal" id="venueImg"></div>
+    <div class="venue-info reveal">
+      <p class="eyebrow">Where</p>
+      <h3>The Celebrations</h3>
+      <div id="venueBlocks"></div>
+    </div>
+  </div>
+</section>
+
+<section id="rsvp" class="section bg-bordeaux">
+  <div class="wrap">
+    <p class="eyebrow reveal" style="color:var(--champagne)">Be there</p>
+    <h2 class="s-title reveal">Will you be there to witness forever?</h2>
+    <div class="rsvp-card reveal">
+      <div id="rsvpForm">
+        <input type="text" class="honey" id="rsvpHoney" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <div class="field"><label for="rsvpName">Your name</label><input type="text" id="rsvpName" placeholder="As you'd like it read aloud" /></div>
+        <div class="field"><label>Will you join us?</label>
+          <div class="attend">
+            <button type="button" data-v="yes">Joyfully yes</button>
+            <button type="button" data-v="no">Sadly, no</button>
+          </div>
+        </div>
+        <div class="field"><label for="rsvpCount">How many in your party?</label>
+          <select id="rsvpCount"><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select>
+        </div>
+        <div class="field"><label for="rsvpNote">A note for us (optional)</label><textarea id="rsvpNote" rows="2" placeholder="Anything we should know"></textarea></div>
+        <button class="btn-gold" id="rsvpSend" style="width:100%">Save my seat</button>
+        <p class="wa-fallback">Prefer WhatsApp? <a id="rsvpWA" target="_blank" rel="noopener">RSVP with a message</a></p>
+      </div>
+      <div class="rsvp-confirm" id="rsvpConfirm">
+        <svg class="knot" viewBox="0 0 90 60"><path d="M10,30 C30,5 60,55 80,30 C60,5 30,55 10,30 Z"/></svg>
+        <h3>Your seat at our story is saved</h3>
+        <p style="color:var(--on-dark-soft);margin-top:.5rem" id="rsvpThanks"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="guestbook" class="section bg-ink">
+  <div class="wrap">
+    <div class="center" style="margin-bottom:1rem">
+      <p class="eyebrow reveal">Sign our story</p>
+      <h2 class="s-title reveal">Leave a blessing</h2>
+    </div>
+    <div class="gb-form reveal">
+      <input type="text" id="gbName" placeholder="Your name" />
+      <textarea id="gbMsg" rows="2" placeholder="A wish for the couple…"></textarea>
+      <button class="btn-gold" id="gbSend" style="justify-self:center">Add my blessing</button>
+    </div>
+    <div class="gb-wall reveal" id="gbWall"></div>
+  </div>
+</section>
+
+<section id="finale" class="section bg-espresso">
+  <div class="wrap">
+    <div class="thread knot" id="finaleKnot"></div>
+    <p class="seeyou">See you there</p>
+    <p class="script sign" id="finaleSign"></p>
+    <p class="hash" id="finaleHash"></p>
+  </div>
+</section>
+<footer>Made with love · Heirloom Modern · <span id="year"></span></footer>
+
+<nav class="dock" id="dock"><div class="dock-inner">
+  <a href="#rsvp" class="primary">RSVP</a>
+  <a id="dockWA" target="_blank" rel="noopener"><span class="ic">✆</span> Message</a>
+  <button id="dockMusic" class="muted" aria-label="Toggle music"><span class="ic">♪</span></button>
+</div></nav>
+<audio id="bgm" loop preload="none"></audio>
+
+<script src="script.js" defer></script>
+</body>
+</html>
