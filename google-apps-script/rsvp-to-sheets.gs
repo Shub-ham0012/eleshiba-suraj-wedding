@@ -1,3 +1,14 @@
+/**
+ * Eleshiba & Suraj — RSVP → Google Sheets
+ * Improvements over the original:
+ *   • LockService prevents two simultaneous RSVPs from racing the duplicate
+ *     check and writing the same row twice.
+ *   • doGet() health endpoint: visiting the Web App URL now returns a friendly
+ *     JSON status so you can confirm the deployment works.
+ * Everything else (shared-secret auth, idempotent duplicate detection,
+ * auto-created sheet with frozen headers, input sanitisation) is unchanged.
+ */
+
 const SHEET_NAME = 'RSVP Responses';
 const HEADERS = [
   'Submitted At',
@@ -11,9 +22,20 @@ const HEADERS = [
   'IP'
 ];
 
+function doGet() {
+  return json({ ok: true, service: 'eleshiba-suraj-wedding RSVP', status: 'live' });
+}
+
 function doPost(e) {
+  const lock = LockService.getScriptLock();
   try {
-    const payload = JSON.parse(e.postData.contents || '{}');
+    lock.waitLock(15000); // wait up to 15s for any in-progress write to finish
+  } catch (err) {
+    return json({ ok: false, error: 'Server busy, please retry.' });
+  }
+
+  try {
+    const payload = JSON.parse((e && e.postData && e.postData.contents) || '{}');
     const expectedSecret = PropertiesService.getScriptProperties().getProperty('RSVP_SHARED_SECRET');
 
     if (expectedSecret && payload.secret !== expectedSecret) {
@@ -45,6 +67,8 @@ function doPost(e) {
     return json({ ok: true, id: submissionId });
   } catch (error) {
     return json({ ok: false, error: 'Unable to save RSVP' });
+  } finally {
+    lock.releaseLock();
   }
 }
 
