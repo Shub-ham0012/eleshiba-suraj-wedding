@@ -188,6 +188,10 @@ function build(){
   CONFIG.gallery.forEach((src,i)=>{
     const f=frame(src,'Moment '+(i+1));
     f.addEventListener('click',()=>openLightbox(src,'Moment '+(i+1)));
+    const img=f.querySelector('img');
+    img.loading='eager';
+    img.decoding='async';
+    img.fetchPriority='low';
     $('#galGrid').appendChild(f);
   });
 
