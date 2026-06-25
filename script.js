@@ -52,34 +52,34 @@ const CONFIG = {
     { name:"Haldi", when:"23 Nov · 11:30 AM", venue:"The Bageechi, Amritsar", color:"#e0a82e",
       mood:"Turmeric, laughter, and the first golden glow.",
       startISO:"2026-11-23T11:30:00+05:30", endISO:"2026-11-23T14:00:00+05:30",
-      map:"https://share.google/k2qqcuMa6miBXSvXU" },
+      map:"https://www.google.com/maps/search/?api=1&query=The%20Bageechi%2C%20Amritsar" },
     { name:"Mehendi", when:"23 Nov · 5:00 PM", venue:"The Bageechi, Amritsar", color:"#5a7d3c",
       mood:"Henna, colour, and endless celebration.",
       startISO:"2026-11-23T17:00:00+05:30", endISO:"2026-11-23T19:30:00+05:30",
-      map:"https://share.google/k2qqcuMa6miBXSvXU" },
+      map:"https://www.google.com/maps/search/?api=1&query=The%20Bageechi%2C%20Amritsar" },
     { name:"Sangeet", when:"23 Nov · 7:30 PM", venue:"The Bageechi, Amritsar", color:"#3b2a5a",
       mood:"Bring your dancing shoes and your loudest laugh.",
       startISO:"2026-11-23T19:30:00+05:30", endISO:"2026-11-23T23:30:00+05:30",
-      map:"https://share.google/k2qqcuMa6miBXSvXU" },
+      map:"https://www.google.com/maps/search/?api=1&query=The%20Bageechi%2C%20Amritsar" },
     { name:"Christian Wedding", when:"24 Nov · 4:00 PM", venue:"Sacred Heart Church, Amritsar", color:"#a13a2a",
       mood:"Two hearts, one vow, before God and family.",
       startISO:"2026-11-24T16:00:00+05:30", endISO:"2026-11-24T18:00:00+05:30",
-      map:"https://share.google/6R1FTDGtriXOjSZGu" },
+      map:"https://www.google.com/maps/search/?api=1&query=Sacred%20Heart%20Church%2C%20Bhawani%20Nagar%2C%20Amritsar%2C%20Punjab%20143001" },
     { name:"Christian Reception", when:"24 Nov · 7:30 PM", venue:"Green Tulip, Amritsar", color:"#6e2a37",
       mood:"Champagne, celebration, and a first dance.",
       startISO:"2026-11-24T19:30:00+05:30", endISO:"2026-11-24T23:59:00+05:30",
-      map:"https://share.google/ngf7bSc7xXQDjdCrW" },
+      map:"https://www.google.com/maps/search/?api=1&query=Green%20Tulip%2C%20Amritsar" },
     { name:"Hindu Wedding & Dinner", when:"25 Nov · 7:30 PM", venue:"Parin Azure, Verka, Amritsar", color:"#c4843d",
       mood:"Sacred rituals, family blessings, forever bonds.",
       startISO:"2026-11-25T19:30:00+05:30", endISO:"2026-11-26T01:00:00+05:30",
-      map:"https://share.google/VDwPHsIx5WF6xP1nH" }
+      map:"https://www.google.com/maps/search/?api=1&query=Parin%20Azure%2C%20Majitha%20Verka%20Bypass%2C%20near%20Fortis%20Escort%2C%20Verka%2C%20Amritsar%20143501" }
   ],
 
   venue: {
     image:"assets/venue.jpg",
     blocks:[
-      { label:"Christian Wedding", name:"Sacred Heart Church", addr:"Bhawani Nagar, Amritsar, Punjab 143001", map:"https://share.google/6R1FTDGtriXOjSZGu" },
-      { label:"Hindu Wedding & Dinner", name:"Parin Azure", addr:"Majitha–Verka Bypass, near Fortis Escort, Verka, Amritsar 143501", map:"https://share.google/VDwPHsIx5WF6xP1nH" }
+      { label:"Christian Wedding", name:"Sacred Heart Church", addr:"Bhawani Nagar, Amritsar, Punjab 143001", map:"https://www.google.com/maps/search/?api=1&query=Sacred%20Heart%20Church%2C%20Bhawani%20Nagar%2C%20Amritsar%2C%20Punjab%20143001" },
+      { label:"Hindu Wedding & Dinner", name:"Parin Azure", addr:"Majitha–Verka Bypass, near Fortis Escort, Verka, Amritsar 143501", map:"https://www.google.com/maps/search/?api=1&query=Parin%20Azure%2C%20Majitha%20Verka%20Bypass%2C%20near%20Fortis%20Escort%2C%20Verka%2C%20Amritsar%20143501" }
     ]
   },
 
@@ -101,6 +101,14 @@ const CONFIG = {
 const $=(s,r=document)=>r.querySelector(s);
 const $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const hasMusic=Boolean(CONFIG.music.url);
+
+function setViewportUnit(){
+  document.documentElement.style.setProperty('--vh',(innerHeight*.01)+'px');
+}
+setViewportUnit();
+addEventListener('resize',setViewportUnit,{passive:true});
+addEventListener('orientationchange',setViewportUnit,{passive:true});
 
 function placeholder(label){
   const svg=`<svg xmlns='http://www.w3.org/2000/svg' width='600' height='750'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%232B1D22'/><stop offset='1' stop-color='%231A1014'/></linearGradient></defs><rect width='100%' height='100%' fill='url(%23g)'/><text x='50%' y='50%' fill='%23C9A24B' font-family='Georgia' font-size='30' font-style='italic' text-anchor='middle'>${label||'Heirloom'}</text></svg>`;
@@ -228,17 +236,44 @@ function tick(){
   $('#countUntil').textContent=`${d} day${d===1?'':'s'} until forever`;
 }
 
-function openLightbox(src,alt){const lb=$('#lightbox');lb.querySelector('img').src=src;lb.querySelector('img').alt=alt;lb.classList.add('open');}
-$('#lightbox').addEventListener('click',()=>$('#lightbox').classList.remove('open'));
-document.addEventListener('keydown',e=>{if(e.key==='Escape')$('#lightbox').classList.remove('open');});
+function closeLightbox(){
+  const lb=$('#lightbox');
+  lb.classList.remove('open');
+  document.body.classList.remove('modal-open');
+}
+function openLightbox(src,alt){
+  const lb=$('#lightbox');
+  lb.querySelector('img').src=src;
+  lb.querySelector('img').alt=alt;
+  lb.classList.add('open');
+  document.body.classList.add('modal-open');
+}
+$('#lightbox').addEventListener('click',e=>{if(e.target.id==='lightbox'||e.target.closest('.close'))closeLightbox();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox();});
 
 let playing=false;
-function flash(el,msg){el.setAttribute('title',msg);el.animate([{opacity:1},{opacity:.4},{opacity:1}],{duration:600});}
-function toggleMusic(){
-  const a=$('#bgm');
-  if(!CONFIG.music.url){flash($('#dockMusic'),'Add your music in CONFIG');return;}
-  if(playing){a.pause();playing=false;}else{a.play().catch(()=>{});playing=true;}
+function flash(el,msg){
+  el.setAttribute('title',msg);
+  if(el.animate)el.animate([{opacity:1},{opacity:.4},{opacity:1}],{duration:600});
+}
+function syncMusicUI(){
   $('#dockMusic').classList.toggle('muted',!playing);
+  $('#dockMusic').setAttribute('aria-pressed',String(playing));
+  $('#soundInvite').setAttribute('aria-pressed',String(playing));
+  $('#soundInvite').setAttribute('aria-label',playing?'Pause wedding music':'Play wedding music');
+}
+async function toggleMusic(){
+  const a=$('#bgm');
+  if(!hasMusic)return;
+  if(playing){a.pause();playing=false;syncMusicUI();return;}
+  try{
+    await a.play();
+    playing=true;
+  }catch(e){
+    playing=false;
+    flash($('#dockMusic'),'Tap again to allow sound');
+  }
+  syncMusicUI();
 }
 $('#dockMusic').addEventListener('click',toggleMusic);
 $('#soundInvite').addEventListener('click',toggleMusic);
@@ -246,6 +281,7 @@ $('#soundInvite').addEventListener('click',toggleMusic);
 let attending=null;
 $$('.attend button').forEach(b=>b.addEventListener('click',()=>{
   attending=b.dataset.v;$$('.attend button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+  $$('.attend button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
 }));
 $('#rsvpSend').addEventListener('click',async()=>{
   if($('#rsvpHoney').value)return;
@@ -262,7 +298,10 @@ const ROT=[-2,-1,0,1,2];
 function addBlessing(b,prepend=true){
   const el=document.createElement('div');el.className='blessing';
   el.style.setProperty('--r',ROT[Math.floor(Math.random()*ROT.length)]+'deg');
-  el.innerHTML=`<div class="pin"></div><p>"${b.message}"</p><div class="by">— ${b.name}</div>`;
+  const pin=document.createElement('div');pin.className='pin';
+  const msg=document.createElement('p');msg.textContent=`"${b.message}"`;
+  const by=document.createElement('div');by.className='by';by.textContent=`— ${b.name}`;
+  el.append(pin,msg,by);
   const wall=$('#gbWall');prepend?wall.prepend(el):wall.appendChild(el);
 }
 $('#gbSend').addEventListener('click',async()=>{
@@ -276,11 +315,23 @@ $('#gbSend').addEventListener('click',async()=>{
 
 const dock=$('#dock');
 addEventListener('scroll',()=>{dock.classList.toggle('show',scrollY>innerHeight*.7);},{passive:true});
+$$('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+  const target=$(a.getAttribute('href'));
+  if(!target)return;
+  e.preventDefault();
+  history.pushState(null,'',a.getAttribute('href'));
+  const align=()=>scrollTo({top:Math.max(0,target.offsetTop-12),behavior:reduce?'auto':'smooth'});
+  align();
+  setTimeout(align,450);
+}));
 
 function start(){
   build();observe();tick();setInterval(tick,1000);
+  $$('.attend button').forEach(x=>x.setAttribute('aria-pressed','false'));
   $('#dockMusic').classList.add('muted');
-  if(CONFIG.music.url)$('#bgm').src=CONFIG.music.url;
+  syncMusicUI();
+  if(hasMusic)$('#bgm').src=CONFIG.music.url;
+  else{$('#dockMusic').hidden=true;$('#soundInvite').hidden=true;}
   setTimeout(()=>$('#loader').classList.add('done'),reduce?0:1700);
 }
 document.readyState!=='loading'?start():addEventListener('DOMContentLoaded',start);

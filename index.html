@@ -10,15 +10,44 @@
 <meta property="og:title" content="Eleshiba &amp; Suraj — A Wedding" />
 <meta property="og:description" content="Two lives, one beautiful beginning. 24–25 November 2026 · Amritsar" />
 <meta property="og:type" content="website" />
-<meta property="og:image" content="assets/og.jpg" />
+<meta property="og:url" content="https://eleshiba-suraj-wedding.vercel.app/" />
+<meta property="og:image" content="https://eleshiba-suraj-wedding.vercel.app/assets/og.jpg" />
+<meta property="og:image:alt" content="Eleshiba and Suraj wedding invitation" />
 <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Eleshiba &amp; Suraj — A Wedding" />
+<meta name="twitter:description" content="Two lives, one beautiful beginning. 24–25 November 2026 · Amritsar" />
+<meta name="twitter:image" content="https://eleshiba-suraj-wedding.vercel.app/assets/og.jpg" />
+<link rel="canonical" href="https://eleshiba-suraj-wedding.vercel.app/" />
 
 <link rel="icon" href="assets/monogram.png" />
+<link rel="apple-touch-icon" href="assets/monogram.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet" />
 <link rel="preload" as="image" href="assets/hero.jpg" fetchpriority="high" />
 <link rel="stylesheet" href="styles.css" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Event",
+  "name": "Eleshiba & Suraj Wedding",
+  "description": "Wedding celebrations for Eleshiba and Suraj in Amritsar, Punjab.",
+  "startDate": "2026-11-24T16:00:00+05:30",
+  "endDate": "2026-11-26T01:00:00+05:30",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "image": "https://eleshiba-suraj-wedding.vercel.app/assets/og.jpg",
+  "location": {
+    "@type": "Place",
+    "name": "Amritsar, Punjab",
+    "address": "Amritsar, Punjab, India"
+  },
+  "organizer": {
+    "@type": "Person",
+    "name": "Eleshiba & Suraj"
+  }
+}
+</script>
 </head>
 <body>
 
@@ -26,7 +55,7 @@
 
 <header id="hero">
   <div class="hero-bg"><img id="heroImg" alt="Eleshiba and Suraj" fetchpriority="high" decoding="async" /></div>
-  <div class="sound-invite" id="soundInvite"><span class="ic">♪</span> Tap for sound</div>
+  <button type="button" class="sound-invite" id="soundInvite" aria-label="Play wedding music"><span class="ic">♪</span> Tap for sound</button>
   <div class="hero-inner">
     <p class="pre">A love story, years in the making</p>
     <h1 class="names" id="heroNames"></h1>
@@ -162,7 +191,9 @@
       <h2 class="s-title reveal">Leave a blessing</h2>
     </div>
     <div class="gb-form reveal">
-      <input type="text" id="gbName" placeholder="Your name" />
+      <label class="sr-only" for="gbName">Your name</label>
+      <input type="text" id="gbName" placeholder="Your name" autocomplete="name" />
+      <label class="sr-only" for="gbMsg">A wish for the couple</label>
       <textarea id="gbMsg" rows="2" placeholder="A wish for the couple…"></textarea>
       <button class="btn-gold" id="gbSend" style="justify-self:center">Add my blessing</button>
     </div>
