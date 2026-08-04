@@ -1,12 +1,16 @@
 /**
  * Eleshiba & Suraj — RSVP → Google Sheets
- * Improvements over the original:
- *   • LockService prevents two simultaneous RSVPs from racing the duplicate
- *     check and writing the same row twice.
- *   • doGet() health endpoint: visiting the Web App URL now returns a friendly
- *     JSON status so you can confirm the deployment works.
- * Everything else (shared-secret auth, idempotent duplicate detection,
- * auto-created sheet with frozen headers, input sanitisation) is unchanged.
+ * This is the exact code behind the live deployed Web App.
+ * getSheet() uses SpreadsheetApp.getActiveSpreadsheet() — the correct,
+ * fully-authorized way to access a container-bound spreadsheet from any
+ * execution context, including headless Web App POST requests.
+ * (Note: an earlier "permission denied" issue traced back to the Google
+ * account's Drive storage being full, not a scope/permission bug — once
+ * storage was freed, this exact code worked immediately.)
+ * Includes LockService (prevents duplicate rows from simultaneous RSVPs),
+ * doGet() health check, shared-secret auth (optional), idempotent
+ * duplicate detection, auto-created sheet with frozen headers, and input
+ * sanitisation.
  */
 
 const SHEET_NAME = 'RSVP Responses';
@@ -29,7 +33,7 @@ function doGet() {
 function doPost(e) {
   const lock = LockService.getScriptLock();
   try {
-    lock.waitLock(15000); // wait up to 15s for any in-progress write to finish
+    lock.waitLock(15000);
   } catch (err) {
     return json({ ok: false, error: 'Server busy, please retry.' });
   }
