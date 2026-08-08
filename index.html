@@ -84,11 +84,11 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 @keyframes kb{from{transform:scale(1.04)}to{transform:scale(1.13)}}
 #home-hero .veil{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(247,242,233,.5),rgba(247,242,233,.34) 42%,rgba(247,242,233,.72))}
 #home-hero .hin{position:relative;z-index:2;padding:0 var(--pad)}
-#home-hero .wgm{font-family:var(--serif);letter-spacing:.32em;text-transform:uppercase;font-size:.78rem;color:var(--rose);margin-bottom:.4rem}
+#home-hero .wgm{font-family:var(--serif);letter-spacing:.28em;text-transform:uppercase;font-size:clamp(.9rem,2.4vw,1.15rem);font-weight:600;color:var(--gold);margin-bottom:.6rem;text-shadow:0 1px 4px rgba(255,255,255,.55),0 1px 14px rgba(0,0,0,.15)}
 #home-hero .names{font-family:var(--script);color:var(--bordeaux);font-size:clamp(3.4rem,14vw,7rem);line-height:.92}
 #home-hero .amp{display:block;font-size:.4em;color:var(--gold);margin:.04em 0}
-#home-hero .date{margin-top:1rem;font-size:.74rem;letter-spacing:.28em;text-transform:uppercase;color:var(--bordeaux)}
-#home-hero .place{font-family:var(--serif);font-style:italic;color:var(--muted);margin-top:.2rem}
+#home-hero .date{margin-top:1.1rem;font-size:clamp(.9rem,2.2vw,1.05rem);font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--bordeaux);text-shadow:0 1px 4px rgba(255,255,255,.5)}
+#home-hero .place{font-family:var(--serif);font-style:italic;font-size:clamp(1.05rem,2.6vw,1.3rem);font-weight:500;color:var(--bordeaux);margin-top:.35rem;text-shadow:0 1px 4px rgba(255,255,255,.5)}
 .hero-cta{margin-top:1.6rem;display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap}
 
 /* countdown */
@@ -227,6 +227,7 @@ body.sealed #home-hero *{animation-play-state:paused!important}
 .wsi-engraving{position:absolute;inset:0;width:100%;height:100%;display:block}
 .wsi-cover-text{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:16% 14% 20%}
 .wsi-cover-eyebrow{font-family:var(--sans);font-size:.56rem;font-weight:500;letter-spacing:.4em;text-transform:uppercase;color:var(--gold-dk2);margin:0 0 6%}
+.wsi-cover-invite{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(.62rem,2.1vw,.8rem);letter-spacing:.02em;line-height:1.55;color:var(--cocoa);opacity:.82;max-width:92%;margin:0 0 5%}
 .wsi-cover-names{font-family:var(--script);line-height:.98;font-size:clamp(2rem,8.5vw,3rem);color:var(--bordeaux);text-shadow:0 1px 0 rgba(255,255,255,.5)}
 .wsi-cover-names .wsi-amp{display:block;color:var(--gold-dk2);font-size:.62em;margin:-.04em 0}
 .wsi-cover-divider{width:44%;height:14px;margin:6% 0}
@@ -384,7 +385,7 @@ body.sealed #home-hero *{animation-play-state:paused!important}
               <use href="#wsiSprig" transform="translate(150,400) scale(1,-1)"/>
             </svg>
             <div class="wsi-cover-text">
-              <div class="wsi-cover-eyebrow">The wedding of</div>
+              <div class="wsi-cover-invite">Mrs Asha Thakur and Mrs Kanchan Sunny<br>invite you to the wedding of their children</div>
               <div class="wsi-cover-names">Eleshiba<span class="wsi-amp">&amp;</span>Suraj</div>
               <svg class="wsi-cover-divider" viewBox="0 0 100 14" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
                 <use href="#wsiMinisprig" transform="translate(50,3)"/>
@@ -524,12 +525,12 @@ body.sealed #home-hero *{animation-play-state:paused!important}
         <div class="time">12:30 PM</div><div><div class="en">Christian Wedding</div><div class="ed">The Sacrament of Holy Matrimony, as Eleshiba &amp; Suraj exchange their vows.</div>
         <div class="evt-actions"><button type="button" class="elink" data-act="guide">Event Guide →</button><button type="button" class="elink" data-act="cal">Add to Calendar ✎</button><button type="button" class="elink" data-act="dir">Directions ✎</button></div></div>
       </div>
-      <div class="evt" data-start="2026-11-24T18:00:00+05:30" data-end="2026-11-24T20:00:00+05:30" data-venue="Green Tulip, Amritsar" data-map="https://maps.google.com/?q=Green+Tulip+Amritsar" data-guide="An evening of music and dance as both families celebrate together. Vibrant festive wear encouraged.">
-        <div class="time">6:00 PM</div><div><div class="en">Sangeet</div><div class="ed">A vibrant evening of music, dance and celebration as both families come together.</div>
+      <div class="evt" data-start="2026-11-24T19:00:00+05:30" data-end="2026-11-24T21:00:00+05:30" data-venue="Green Tulip, Amritsar" data-map="https://maps.google.com/?q=Green+Tulip+Amritsar" data-guide="An evening of cake, toasts and dinner. Cocktail or festive evening wear. Followed straight after by Sangeet, same venue.">
+        <div class="time">7:00 PM</div><div><div class="en">Reception</div><div class="ed">A joyful evening of cake, toasts and dinner to begin the celebrations — Sangeet follows right after, same venue!</div>
         <div class="evt-actions"><button type="button" class="elink" data-act="guide">Event Guide →</button><button type="button" class="elink" data-act="cal">Add to Calendar ✎</button><button type="button" class="elink" data-act="dir">Directions ✎</button></div></div>
       </div>
-      <div class="evt" data-start="2026-11-24T20:00:00+05:30" data-end="2026-11-25T00:00:00+05:30" data-venue="Green Tulip, Amritsar" data-map="https://maps.google.com/?q=Green+Tulip+Amritsar" data-guide="An evening of cake, toasts, dinner and dancing. Cocktail or festive evening wear. Dinner service begins right after Sangeet.">
-        <div class="time">8:00 PM</div><div><div class="en">Reception</div><div class="ed">A joyful evening of cake, toasts, dinner and dancing — right after Sangeet, same venue!</div>
+      <div class="evt" data-start="2026-11-24T21:00:00+05:30" data-end="2026-11-24T23:00:00+05:30" data-venue="Green Tulip, Amritsar" data-map="https://maps.google.com/?q=Green+Tulip+Amritsar" data-guide="An evening of music and dance as both families celebrate together. Vibrant festive wear encouraged. Right after Reception, same venue.">
+        <div class="time">9:00 PM</div><div><div class="en">Sangeet</div><div class="ed">A vibrant evening of music, dance and celebration as both families come together.</div>
         <div class="evt-actions"><button type="button" class="elink" data-act="guide">Event Guide →</button><button type="button" class="elink" data-act="cal">Add to Calendar ✎</button><button type="button" class="elink" data-act="dir">Directions ✎</button></div></div>
       </div>
     </div>
